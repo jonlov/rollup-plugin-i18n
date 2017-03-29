@@ -6,7 +6,6 @@ export default function i18n(options = {}) {
         let val;
         if (!dict.hasOwnProperty(p1)) {
             val = p1;
-            // this.warn('missing translation for:', p1);
             console.log('missing translation for:', p1);
         } else {
             val = dict[p1];
