@@ -1,0 +1,29 @@
+{
+  "name": "rollup-plugin-i18n",
+  "version": "0.1.0",
+  "description": "Embed localization in your bundle",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "rollup": "^0.41.6"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phamtm/rollup-plugin-i18n.git"
+  },
+  "keywords": [
+    "rollup-plugin",
+    "i18n",
+    "rollup"
+  ],
+  "author": "Minh Pham (phamminh91@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phamtm/rollup-plugin-i18n/issues"
+  },
+  "homepage": "https://github.com/phamtm/rollup-plugin-i18n#readme"
+}
