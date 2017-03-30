@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-i18n",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Embed localization in your bundle",
   "main": "index.js",
   "dependencies": {
@@ -37,11 +37,17 @@
       "test/*.js",
       "!test/sample/**/*.js"
     ],
-    "require": ["babel-register"],
+    "require": [
+      "babel-register"
+    ],
     "babel": "inherit"
   },
   "babel": {
-    "presets": ["@ava/stage-4"],
-    "plugins": ["transform-object-rest-spread"]
+    "presets": [
+      "@ava/stage-4"
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
   }
 }
