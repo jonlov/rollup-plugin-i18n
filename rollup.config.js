@@ -1,4 +1,3 @@
-
 export default {
     entry: 'index.js',
     format: 'es',

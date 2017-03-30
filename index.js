@@ -10,13 +10,15 @@ export default function i18n(options = {}) {
         } else {
             val = dict[p1];
         }
-        return `"${val}"`;
+
+        return '"' + val + '"';
     }
 
     return {
         name: 'i18n',
         transform: function (source, id) {
-            return source.replace(re, replacer.bind(this));
+          // console.log(source.replace(re, replacer.bind(this)));
+          return source.replace(re, replacer.bind(this));
         },
     };
 }
