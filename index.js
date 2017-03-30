@@ -17,7 +17,6 @@ export default function i18n(options = {}) {
     return {
         name: 'i18n',
         transform: function (source, id) {
-          // console.log(source.replace(re, replacer.bind(this)));
           return source.replace(re, replacer.bind(this));
         },
     };
