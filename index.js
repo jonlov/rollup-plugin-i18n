@@ -1,4 +1,4 @@
-export default function i18n(options = {}) {
+module.exports = function(options = {}) {
     const dict = options.language || {};
     const re = /__\(\s*['"`](.+)['"`]\s*\)/g;
 
