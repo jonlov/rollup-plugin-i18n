@@ -7,6 +7,9 @@ const baseConfig = {
   plugins: [i18n({
     language: {
       'a': 'amy',
+      'b': {
+        'c': 'not_amy'
+      }
     },
   })],
 };
@@ -20,5 +23,6 @@ test('replace simple', async t => {
 
     const code = bundle.generate({format:'es'}).code;
     t.true(code.indexOf('const a = "amy"') !== -1);
+    t.true(code.indexOf('const c = "not_amy"') !== -1);
   }
 });
