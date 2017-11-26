@@ -1,17 +1,32 @@
 module.exports = function(options = {}) {
     const dict = options.language || {};
     const re = /__\(\s*['"`](.+)['"`]\s*\)/g;
+    const isObject = function(value) {
+      return Object.prototype.toString.call(value) === '[object Object]';
+    }
 
     function replacer(match, p1) {
         let val;
-        if (!dict.hasOwnProperty(p1)) {
+
+        function scan(obj) {
+          let k;
+
+          if (obj.hasOwnProperty(p1)) {
+            val = obj[p1];
+          } else if (isObject(obj) && !obj.hasOwnProperty(p1)) {
+            for (k in obj) {
+              if (obj.hasOwnProperty(k)) {
+                scan(obj[k]);
+              }
+            }
+          } else {
             val = p1;
-            console.log('missing translation for:', p1);
-        } else {
-            val = dict[p1];
+          }
+
+          return '"' + val + '"';
         }
 
-        return '"' + val + '"';
+        return scan(dict);
     }
 
     return {
