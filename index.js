@@ -1,11 +1,11 @@
 module.exports = function(options = {}) {
     const dict = options.language || {};
-    const re = /__\(\s*['"`](.+)['"`]\s*\)/g;
+    const re = /__\(\s*(['"`])(.+?)\1\s*\)/g;
     const isObject = function(value) {
       return Object.prototype.toString.call(value) === '[object Object]';
     }
 
-    function replacer(match, p1) {
+    function replacer(match, p0, p1) {
         let val;
 
         function scan(obj) {
