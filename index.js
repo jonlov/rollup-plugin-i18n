@@ -2,19 +2,21 @@ const vsprintf = require("sprintf").vsprintf;
 
 module.exports = function(options = {}) {
     const dict = options.language || {};
-    const re = /__\(\s*['"`](.+)['"`]\s*\)/g;
+    const re = /___\([^\)]+\)/g;
     const isObject = function(value) {
         return Object.prototype.toString.call(value) === '[object Object]';
     }
 
     function replacer(match, p1) {
-        var args = /\(\s*([^)]+?)\s*\)/.exec(match),
-        split;
-        if (args[1]) {
-            split = args[1].replace(/['"]+/g, '').replace(' ', '').split(/\s*,\s*/);
-        }
-        if(split)
-            p1 = split[0];
+        p1 = /___\(\s*['"`](.+)['"`]\s*\)/g.exec(match)[1];
+
+        // var args = re.exec(match),
+        // split;
+        // if (args[1]) {
+        //     split = args[1].replace(/['"]+/g, '').replace(' ', '').split(/\s*,\s*/);
+        // }
+        // if(split)
+        //     p1 = split[0];
 
         let val;
 
@@ -33,7 +35,7 @@ module.exports = function(options = {}) {
                 val = p1;
             }
 
-            val = vsprintf(val, Array.prototype.slice.call(split, 1));
+            // val = vsprintf(val, Array.prototype.slice.call(split, 1));
 
             return '"' + val + '"';
         }
