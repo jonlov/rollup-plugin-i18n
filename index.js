@@ -1,6 +1,18 @@
-const vsprintf = require("sprintf").vsprintf;
+// DO NOT CHANGE function() to () => {
+// or it will break because there's not arguments
+module.exports.sprintf = function () {
+    let msg = arguments[0],count = (msg.match(/%s/g) || []).length,
+        argsSliced = Array.prototype.slice.call(arguments, 1);
+    for (let i = 0; i < count; i++) {
+        msg = msg.replace('%s', (argsSliced[i])
+            ? argsSliced[i]
+            : '')
+    }
+    return msg;
+}
 
 module.exports = function(options = {}) {
+    const vsprintf = require("sprintf").vsprintf;
     const dict = options.language || {};
     const re = /___\([^\)]+\)/g;
     const isObject = function(value) {
