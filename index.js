@@ -1,29 +1,41 @@
+const vsprintf = require("sprintf").vsprintf;
+
 module.exports = function(options = {}) {
     const dict = options.language || {};
-    const re = /__\(\s*(['"`])(.+?)\1\s*\)/g;
+    const re = /__\(\s*['"`](.+)['"`]\s*\)/g;
     const isObject = function(value) {
-      return Object.prototype.toString.call(value) === '[object Object]';
+        return Object.prototype.toString.call(value) === '[object Object]';
     }
 
-    function replacer(match, p0, p1) {
+    function replacer(match, p1) {
+        var args = /\(\s*([^)]+?)\s*\)/.exec(match),
+        split;
+        if (args[1]) {
+            split = args[1].replace(/['"]+/g, '').replace(' ', '').split(/\s*,\s*/);
+        }
+        if(split)
+            p1 = split[0];
+
         let val;
 
         function scan(obj) {
-          let k;
+            let k;
 
-          if (obj.hasOwnProperty(p1)) {
-            val = obj[p1];
-          } else if (isObject(obj) && !obj.hasOwnProperty(p1)) {
-            for (k in obj) {
-              if (obj.hasOwnProperty(k)) {
-                scan(obj[k]);
-              }
+            if (obj.hasOwnProperty(p1)) {
+                val = obj[p1];
+            } else if (isObject(obj) && !obj.hasOwnProperty(p1)) {
+                for (k in obj) {
+                    if (obj.hasOwnProperty(k)) {
+                        scan(obj[k]);
+                    }
+                }
+            } else {
+                val = p1;
             }
-          } else {
-            val = p1;
-          }
 
-          return '"' + val + '"';
+            val = vsprintf(val, Array.prototype.slice.call(split, 1));
+
+            return '"' + val + '"';
         }
 
         return scan(dict);
@@ -31,8 +43,8 @@ module.exports = function(options = {}) {
 
     return {
         name: 'i18n',
-        transform: function (source, id) {
-          return source.replace(re, replacer.bind(this));
-        },
+        transform: function(source, id) {
+            return source.replace(re, replacer.bind(this));
+        }
     };
 }
